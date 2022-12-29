@@ -1,0 +1,21 @@
+@import './custom';
+
+
+.App {  
+  text-align: center;
+  height: 100vh;
+  width: 100vw;
+  @include themed() {
+    color: t('text');
+    background: t('bg');
+  }
+}
+.card{
+
+  @include themed() {
+     
+   background-color: t('bg');
+  }
+  
+}
+

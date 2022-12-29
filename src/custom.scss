@@ -1,0 +1,57 @@
+
+//   $background: #ffffff;
+//   $text-primary: #000;
+//   $text-secondary: #8e05c2;
+//   $accent: #8e05c2;
+//   $border: #333;
+//   $form-bg: #fff;
+  
+  
+//   [data-theme='dark'] {
+//     $background: #000;
+//     $text-primary: #fff;
+//     $text-secondary: #c56de7;
+//     $accent: #d285f0;
+//     $border: #808080;
+//     $form-bg: #191919;
+//   }
+  
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  
+  $text--light: black;
+$text--dark: white;
+$bg--light: white;
+$bg--dark: black;
+
+$themes: (
+        light: (
+                bg: $bg--light,
+                text: $text--light,
+        ),
+        dark: (
+                bg: $bg--dark,
+                text: $text--dark,
+        ),
+);
+
+@mixin themed() {
+  @each $theme, $map in $themes {
+    .theme--#{$theme} & {
+      $theme-map: () !global;
+      @each $key, $submap in $map {
+        $value: map-get(map-get($themes, $theme), '#{$key}');
+        $theme-map: map-merge($theme-map, ($key: $value)) !global;
+      }
+      @content;
+      $theme-map: null !global;
+    }
+  }
+}
+
+@function t($key) {
+  @return map-get($theme-map, $key);
+}
